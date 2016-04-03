@@ -1,0 +1,22 @@
+{
+  "name": "game",
+  "authors": [
+    "avil13 <13.avil@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "phaser": "^2.4.6"
+  }
+}
