@@ -25,8 +25,9 @@ module Game {
         create() {
             var h = this.hero = this.game.add.sprite(100, 180, 'hero');
 
-            h.animations.add('run', Phaser.Animation.generateFrameNames('hero/', 1, 21, '', 2), 10, true, false);
-            h.animations.play('run');
+            // h.animations.add('run', Phaser.Animation.generateFrameNames('hero/', 1, 21, '', 2), 1, true, false);
+            h.animations.add('run', Phaser.Animation.generateFrameNames('hero/', 11, 16, '', 2), 1, true, false);
+            h.animations.play('run', 1);
 
             h.anchor.set(0.5, 0.5);
             h.scale.setTo(1, 1);
