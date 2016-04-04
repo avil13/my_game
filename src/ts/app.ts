@@ -9,7 +9,7 @@ module Game {
 
 
         constructor() {
-            this.game = new Phaser.Game(500, 400, Phaser.AUTO, 'my-game', {
+            this.game = new Phaser.Game(600, 400, Phaser.AUTO, 'my-game', {
                 preload: this.preload,
                 create: this.create,
                 update: this.update,
@@ -19,40 +19,15 @@ module Game {
 
         preload() {
             this.background = this.game.load.image('background', '/img/background.png');
-            this.game.load.atlasJSONHash('hero', '/sprite/hero/hero.png', '/sprite/hero/hero.json');
+            new Hero.WhiteHero(this.game);
         }
 
         create() {
-            var h = this.hero = this.game.add.sprite(100, 180, 'hero');
-
-            // h.animations.add('run', Phaser.Animation.generateFrameNames('hero/', 1, 21, '', 2), 1, true, false);
-            h.animations.add('run', Phaser.Animation.generateFrameNames('hero/', 11, 16, '', 2), 1, true, false);
-            h.animations.play('run', 1);
-
-            h.anchor.set(0.5, 0.5);
-            h.scale.setTo(1, 1);
+            this.hero = Hero.WhiteHero.create(this.game);
         }
 
         update() {
-            var h = this.hero;
-
-            if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-                h.x -= 4;
-                if(h.scale.x < 0){
-                    h.scale.x *= -1;
-                }
-            } else if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-                h.x += 4;
-                if(h.scale.x > 0){
-                    h.scale.x *= -1;
-                }
-            }
-
-            if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
-                h.y -= 4;
-            } else if (this.game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
-                h.y += 4;
-            }
+            Hero.WhiteHero.update(this.game);
         }
 
         render() {
