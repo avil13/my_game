@@ -24,6 +24,7 @@ module Game {
 
         create() {
             this.hero = Hero.WhiteHero.create(this.game);
+            this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         }
 
         update() {
