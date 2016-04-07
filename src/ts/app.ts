@@ -4,12 +4,14 @@ module Game {
     export class ExtrimeWalking {
         game:Phaser.Game;
 
-        private hero:any;
-        private background:any;
+        private hero: Phaser.Sprite;
+        // private background: Phaser.Game;
+        private ground: Phaser.Sprite;
+        private clouds: any;
 
 
         constructor() {
-            this.game = new Phaser.Game(600, 400, Phaser.AUTO, 'my-game', {
+            this.game = new Phaser.Game(800, 600, Phaser.AUTO, 'my-game', {
                 preload: this.preload,
                 create: this.create,
                 update: this.update,
@@ -18,13 +20,28 @@ module Game {
         }
 
         preload() {
-            this.background = this.game.load.image('background', '/img/background.png');
+            // this.background = this.game.load.image('background', '/img/background.png');
+            this.game.load.image('ground', '/img/2048x48-ground.png');
             new Hero.WhiteHero(this.game);
         }
 
         create() {
-            this.hero = Hero.WhiteHero.create(this.game);
+            var gofull = function () {
+                this.game.scale.startFullScreen(false);
+            }
+            if (!this.game.device.desktop) {
+                this.game.input.onDown.add(gofull, this);
+            } //go fullscreen on mobile devices
+
+            // this.game.physics.startSystem(Phaser.Physics.P2JS); //activate physics
+            this.game.physics.startSystem(Phaser.Physics.NINJA);
+
             this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+
+            // personages:
+            this.hero = Hero.WhiteHero.create(this.game);
+
+            this.game.physics.ninja.enableAABB([this.hero]);
         }
 
         update() {
