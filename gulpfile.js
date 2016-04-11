@@ -9,8 +9,11 @@ var paths = {
 
     appLibs: 'libs.js',
     libs: [
-        'src/libs/phaser.js'
+        'src/libs/phaser.js',
+        'src/libs/phaser.2.4.5.ninja-physics.min.js'
     ],
+
+    tst: 'src/ts/test.js',
 
     appCss: 'app.css',
     css: [
@@ -43,7 +46,15 @@ var tasks = {
             .pipe($.plumber({ errorHandler: $.notify.onError("Error:\n<%= error %>") }))
             .pipe($.using())
             .pipe($.sourcemaps.init())
-            .pipe($.concat(paths.appLibs))
+            // .pipe($.concat(paths.appLibs))
+            .pipe($.sourcemaps.write('./'))
+            .pipe(gulp.dest(paths.dist));
+    },
+
+    tst: function(done) {
+        return gulp.src(paths.tst)
+            .pipe($.plumber({ errorHandler: $.notify.onError("Error:\n<%= error %>") }))
+            .pipe($.sourcemaps.init())
             .pipe($.sourcemaps.write('./'))
             .pipe(gulp.dest(paths.dist));
     },
@@ -74,16 +85,18 @@ var tasks = {
 };
 
 gulp.task('js', tasks.js);
+gulp.task('tst', tasks.tst);
 gulp.task('libs', tasks.libs);
 gulp.task('css', tasks.css);
 gulp.task('html', tasks.html);
 
-gulp.task('server', ['js', 'libs', 'css', 'html'], tasks.server);
+gulp.task('server', ['js', 'tst', 'libs', 'css', 'html'], tasks.server);
 
 gulp.task('default', ['server', 'watch']);
 
-gulp.task('watch', ['js', 'libs', 'css', 'html'], function() {
+gulp.task('watch', ['js', 'tst', 'libs', 'css', 'html'], function() {
     gulp.watch(paths.ts, ['js']);
+    gulp.watch(paths.tst, ['tst']);
     gulp.watch(paths.libs, ['libs']);
     gulp.watch(paths.css, ['css']);
     gulp.watch(paths.html, ['html']);
